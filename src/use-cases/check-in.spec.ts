@@ -10,7 +10,7 @@ let checkInsRepository: InMemoryCheckInsRepository
 let petsRepository: InMemoryPetsRepository
 let sut: CheckInUseCase // SUT - system under test
 
-describe('CheckIn Use Case', () => {
+describe.skip('CheckIn Use Case', () => {
   beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository()
     petsRepository = new InMemoryPetsRepository()

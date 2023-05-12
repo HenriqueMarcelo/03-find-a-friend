@@ -36,7 +36,7 @@ export class PrismaPetsRepository implements PetsRepository {
     return pet
   }
 
-  async create(data: Prisma.PetCreateInput) {
+  async create(data: Prisma.PetUncheckedCreateInput) {
     const pet = await prisma.pet.create({
       data,
     })

@@ -3,7 +3,7 @@ import request from 'supertest'
 import { app } from '@/app'
 import { createAndAuthenticateOrganization } from '@/utils/test/create-and-authenticate-user'
 
-describe.skip('Create Pet (e2e)', () => {
+describe('Create Pet (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -19,13 +19,14 @@ describe.skip('Create Pet (e2e)', () => {
       .post('/pets')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        title: 'JavaScript Pet',
-        description: 'Some Description',
-        phone: '2225252525',
-        latitude: -22.2498094,
-        longitude: -42.4331477,
+        name: 'José',
+        description: 'José',
+        energy: 1,
+        birth: null,
+        size: 1,
       })
 
+    console.log(response.body)
     expect(response.statusCode).toEqual(201)
   })
 })

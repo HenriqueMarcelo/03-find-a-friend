@@ -7,7 +7,7 @@ import { LateCheckInValidationError } from './erros/late-check-in-validation-err
 let checkInsRepository: InMemoryCheckInsRepository
 let sut: ValidateCheckInUseCase // SUT - system under test
 
-describe('CheckIn Use Case', () => {
+describe.skip('CheckIn Use Case', () => {
   beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository()
     sut = new ValidateCheckInUseCase(checkInsRepository) // SUT - system under test

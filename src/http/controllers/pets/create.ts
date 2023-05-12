@@ -4,28 +4,26 @@ import { makeCreatePetUseCase } from '@/use-cases/factories/make-create-pet-use-
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createPetBodySchema = z.object({
-    title: z.string(),
+    name: z.string(),
     description: z.string().nullable(),
-    phone: z.string().nullable(),
-    latitude: z.number().refine((value) => {
-      return Math.abs(value) <= 90
-    }),
-    longitude: z.number().refine((value) => {
-      return Math.abs(value) <= 180
-    }),
+    energy: z.coerce.number().nullable(),
+    birth: z.string().nullable(),
+    size: z.coerce.number().nullable(),
   })
 
-  const { title, description, phone, latitude, longitude } =
-    createPetBodySchema.parse(request.body)
+  const { name, description, energy, birth, size } = createPetBodySchema.parse(
+    request.body,
+  )
 
   const createPetUseCase = makeCreatePetUseCase()
 
   await createPetUseCase.execute({
-    title,
+    name,
     description,
-    phone,
-    latitude,
-    longitude,
+    energy,
+    birth,
+    size,
+    organization_id: request.user.sub,
   })
 
   return reply.status(201).send()
