@@ -1,12 +1,17 @@
 import { OrganizationsRepository } from '@/repositories/users-repository'
 import { hash } from 'bcryptjs'
 import { OrganizationAlreadyExistsError } from './erros/user-already-exists-error'
-import { Organization } from '@prisma/client'
+import { Organization, UF } from '@prisma/client'
 
 interface RegisterUseCaseRequest {
-  password: string
-  email: string
   name: string
+  email: string
+  password: string
+  cep: string
+  adress: string
+  whatsapp: string
+  city: string
+  uf: UF
 }
 
 interface RegisterUseCaseResponse {
@@ -17,9 +22,14 @@ export class RegisterUseCase {
   constructor(private usersRepository: OrganizationsRepository) {}
 
   async execute({
-    password,
-    email,
     name,
+    email,
+    password,
+    cep,
+    adress,
+    whatsapp,
+    city,
+    uf,
   }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
     const password_hash = await hash(password, 6)
 
@@ -33,6 +43,11 @@ export class RegisterUseCase {
       name,
       email,
       password_hash,
+      cep,
+      adress,
+      whatsapp,
+      city,
+      uf,
     })
 
     return {

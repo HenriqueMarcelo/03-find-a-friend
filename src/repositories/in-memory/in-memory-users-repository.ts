@@ -31,6 +31,11 @@ export class InMemoryOrganizationRepository implements OrganizationsRepository {
       name: data.name,
       email: data.email,
       password_hash: data.password_hash,
+      adress: data.adress || null,
+      cep: data.cep || null,
+      city: data.city,
+      uf: data.uf,
+      whatsapp: data.whatsapp,
       created_at: new Date(),
     }
 

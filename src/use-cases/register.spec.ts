@@ -18,6 +18,11 @@ describe('Register Use Case', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      adress: 'Avenida Paulista',
+      cep: '25555-320	',
+      city: 'São Paulo',
+      uf: 'SP',
+      whatsapp: '22999887766',
     })
 
     const isPasswordCorrectlyHashed = await compare(
@@ -35,6 +40,11 @@ describe('Register Use Case', () => {
       name: 'John Doe',
       email,
       password: '123456',
+      adress: 'Avenida Paulista',
+      cep: '25555-320	',
+      city: 'São Paulo',
+      uf: 'SP',
+      whatsapp: '22999887766',
     })
 
     await expect(() =>
@@ -42,6 +52,11 @@ describe('Register Use Case', () => {
         name: 'John Doe',
         email,
         password: '123456',
+        adress: 'Avenida Paulista',
+        cep: '25555-320	',
+        city: 'São Paulo',
+        uf: 'SP',
+        whatsapp: '22999887766',
       }),
     ).rejects.toBeInstanceOf(OrganizationAlreadyExistsError)
   })
@@ -51,6 +66,11 @@ describe('Register Use Case', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      adress: 'Avenida Paulista',
+      cep: '25555-320	',
+      city: 'São Paulo',
+      uf: 'SP',
+      whatsapp: '22999887766',
     })
 
     expect(user.id).toEqual(expect.any(String))
