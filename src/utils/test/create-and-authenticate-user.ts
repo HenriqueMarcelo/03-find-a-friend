@@ -12,7 +12,11 @@ export async function createAndAuthenticateOrganization(
       name: 'John Doe',
       email: 'johndoe@example.com',
       password_hash: await hash('123456', 6),
-      role: isAdmin ? 'ADMIN' : 'MEMBER',
+      adress: 'Avenida Paulista',
+      cep: '25555-320	',
+      city: 'São Paulo',
+      uf: 'SP',
+      whatsapp: '22999887766',
     },
   })
 
