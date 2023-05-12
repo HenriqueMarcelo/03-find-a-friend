@@ -5,11 +5,11 @@ import { nearby } from './nearby'
 import { create } from './create'
 import { verifyOrganizationRole } from '@/http/middlewares/verify-user-role'
 
-export async function gymsRoutes(app: FastifyInstance) {
+export async function petsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
 
-  app.get('/gyms/search', search)
-  app.get('/gyms/nearby', nearby)
+  app.get('/pets/search', search)
+  app.get('/pets/nearby', nearby)
 
-  app.post('/gyms', { onRequest: [verifyOrganizationRole('ADMIN')] }, create)
+  app.post('/pets', { onRequest: [verifyOrganizationRole('ADMIN')] }, create)
 }

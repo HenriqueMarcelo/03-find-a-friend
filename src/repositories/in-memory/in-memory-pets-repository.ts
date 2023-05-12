@@ -1,19 +1,19 @@
-import { Gym, Prisma } from '@prisma/client'
-import { FindManyNearbyParams, GymsRepository } from '../gyms-repository'
+import { Pet, Prisma } from '@prisma/client'
+import { FindManyNearbyParams, PetsRepository } from '../pets-repository'
 import { randomUUID } from 'crypto'
 import { getDistanceBetweenCoodinates } from '@/utils/get-distance-between-coodinates'
 
-export class InMemoryGymsRepository implements GymsRepository {
-  public items: Gym[] = []
+export class InMemoryPetsRepository implements PetsRepository {
+  public items: Pet[] = []
 
   async findById(id: string) {
-    const gym = this.items.find((item) => item.id === id)
+    const pet = this.items.find((item) => item.id === id)
 
-    if (!gym) {
+    if (!pet) {
       return null
     }
 
-    return gym
+    return pet
   }
 
   async searchMany(query: string, page: number) {
@@ -39,8 +39,8 @@ export class InMemoryGymsRepository implements GymsRepository {
     })
   }
 
-  async create(data: Prisma.GymCreateInput) {
-    const gym = {
+  async create(data: Prisma.PetCreateInput) {
+    const pet = {
       id: data.id ?? randomUUID(),
       title: data.title,
       description: data.description ?? null,
@@ -50,8 +50,8 @@ export class InMemoryGymsRepository implements GymsRepository {
       created_at: new Date(),
     }
 
-    this.items.push(gym)
+    this.items.push(pet)
 
-    return gym
+    return pet
   }
 }

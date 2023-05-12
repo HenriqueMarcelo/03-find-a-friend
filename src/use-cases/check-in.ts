@@ -1,6 +1,6 @@
 import { CheckIn } from '@prisma/client'
 import { CheckInsRepository } from '@/repositories/check-ins-repository'
-import { GymsRepository } from '@/repositories/gyms-repository'
+import { PetsRepository } from '@/repositories/pets-repository'
 import { ResourceNotFoundError } from './erros/resource-not-found-error'
 import { getDistanceBetweenCoodinates } from '@/utils/get-distance-between-coodinates'
 import { MaxDistanceError } from './erros/max-distance-error'
@@ -8,7 +8,7 @@ import { MaxNumberOfCheckInsError } from './erros/max-number-of-check-ins-error'
 
 interface CheckInUseCaseRequest {
   userId: string
-  gymId: string
+  petId: string
   userLatitude: number
   userLongitude: number
 }
@@ -20,18 +20,18 @@ interface CheckInUseCaseResponse {
 export class CheckInUseCase {
   constructor(
     private checkInsRepository: CheckInsRepository,
-    private gymsRepository: GymsRepository,
+    private petsRepository: PetsRepository,
   ) {}
 
   async execute({
     userId,
-    gymId,
+    petId,
     userLatitude,
     userLongitude,
   }: CheckInUseCaseRequest): Promise<CheckInUseCaseResponse> {
-    const gym = await this.gymsRepository.findById(gymId)
+    const pet = await this.petsRepository.findById(petId)
 
-    if (!gym) {
+    if (!pet) {
       throw new ResourceNotFoundError()
     }
 
@@ -41,8 +41,8 @@ export class CheckInUseCase {
         longitude: userLongitude,
       },
       {
-        latitude: gym.latitude.toNumber(),
-        longitude: gym.longitude.toNumber(),
+        latitude: pet.latitude.toNumber(),
+        longitude: pet.longitude.toNumber(),
       },
     )
 
@@ -52,10 +52,11 @@ export class CheckInUseCase {
       throw new MaxDistanceError()
     }
 
-    const checkInOnSameDay = await this.checkInsRepository.findByOrganizationIdOnDate(
-      userId,
-      new Date(),
-    )
+    const checkInOnSameDay =
+      await this.checkInsRepository.findByOrganizationIdOnDate(
+        userId,
+        new Date(),
+      )
 
     if (checkInOnSameDay) {
       throw new MaxNumberOfCheckInsError()
@@ -63,7 +64,7 @@ export class CheckInUseCase {
 
     const checkIn = await this.checkInsRepository.create({
       user_id: userId,
-      gym_id: gymId,
+      pet_id: petId,
     })
 
     return {

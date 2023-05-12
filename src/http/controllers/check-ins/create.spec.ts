@@ -16,9 +16,9 @@ describe.skip('Create Check-In (e2e)', () => {
   it('should be able to create a check-in', async () => {
     const { token } = await createAndAuthenticateOrganization(app)
 
-    const gym = await prisma.gym.create({
+    const pet = await prisma.pet.create({
       data: {
-        title: 'JavaScript Gym',
+        title: 'JavaScript Pet',
         // description: 'Some Description',
         // phone: '2225252525',
         latitude: -22.2498094,
@@ -27,7 +27,7 @@ describe.skip('Create Check-In (e2e)', () => {
     })
 
     const response = await request(app.server)
-      .post(`/gyms/${gym.id}/check-ins`)
+      .post(`/pets/${pet.id}/check-ins`)
       .set('Authorization', `Bearer ${token}`)
       .send({
         latitude: -22.2498094,

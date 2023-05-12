@@ -18,9 +18,9 @@ describe.skip('History Check-in (e2e)', () => {
 
     const user = await prisma.organization.findFirstOrThrow()
 
-    const gym = await prisma.gym.create({
+    const pet = await prisma.pet.create({
       data: {
-        title: 'JavaScript Gym',
+        title: 'JavaScript Pet',
         latitude: -22.2498094,
         longitude: -42.4331477,
       },
@@ -29,11 +29,11 @@ describe.skip('History Check-in (e2e)', () => {
     await prisma.checkIn.createMany({
       data: [
         {
-          gym_id: gym.id,
+          pet_id: pet.id,
           user_id: user.id,
         },
         {
-          gym_id: gym.id,
+          pet_id: pet.id,
           user_id: user.id,
         },
       ],
@@ -47,11 +47,11 @@ describe.skip('History Check-in (e2e)', () => {
     expect(response.statusCode).toEqual(200)
     expect(response.body.checkIns).toEqual([
       expect.objectContaining({
-        gym_id: gym.id,
+        pet_id: pet.id,
         user_id: user.id,
       }),
       expect.objectContaining({
-        gym_id: gym.id,
+        pet_id: pet.id,
         user_id: user.id,
       }),
     ])

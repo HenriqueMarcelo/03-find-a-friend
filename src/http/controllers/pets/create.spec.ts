@@ -3,7 +3,7 @@ import request from 'supertest'
 import { app } from '@/app'
 import { createAndAuthenticateOrganization } from '@/utils/test/create-and-authenticate-user'
 
-describe.skip('Create Gym (e2e)', () => {
+describe.skip('Create Pet (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -12,14 +12,14 @@ describe.skip('Create Gym (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to create a Gym', async () => {
+  it('should be able to create a Pet', async () => {
     const { token } = await createAndAuthenticateOrganization(app, true)
 
     const response = await request(app.server)
-      .post('/gyms')
+      .post('/pets')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        title: 'JavaScript Gym',
+        title: 'JavaScript Pet',
         description: 'Some Description',
         phone: '2225252525',
         latitude: -22.2498094,

@@ -13,12 +13,12 @@ describe('Fetch Organization Check-in History Use Case', () => {
 
   it('should be able to fetch check-in history', async () => {
     await checkInsRepository.create({
-      gym_id: 'gym-01',
+      pet_id: 'pet-01',
       user_id: 'user-01',
     })
 
     await checkInsRepository.create({
-      gym_id: 'gym-02',
+      pet_id: 'pet-02',
       user_id: 'user-01',
     })
 
@@ -29,15 +29,15 @@ describe('Fetch Organization Check-in History Use Case', () => {
 
     expect(checkIns).toHaveLength(2)
     expect(checkIns).toEqual([
-      expect.objectContaining({ gym_id: 'gym-01' }),
-      expect.objectContaining({ gym_id: 'gym-02' }),
+      expect.objectContaining({ pet_id: 'pet-01' }),
+      expect.objectContaining({ pet_id: 'pet-02' }),
     ])
   })
 
   it('should be able to fetch paginated check-in history', async () => {
     for (let i = 1; i <= 22; i++) {
       await checkInsRepository.create({
-        gym_id: `gym-${i}`,
+        pet_id: `pet-${i}`,
         user_id: 'user-01',
       })
     }
@@ -49,8 +49,8 @@ describe('Fetch Organization Check-in History Use Case', () => {
 
     expect(checkIns).toHaveLength(2)
     expect(checkIns).toEqual([
-      expect.objectContaining({ gym_id: 'gym-21' }),
-      expect.objectContaining({ gym_id: 'gym-22' }),
+      expect.objectContaining({ pet_id: 'pet-21' }),
+      expect.objectContaining({ pet_id: 'pet-22' }),
     ])
   })
 })

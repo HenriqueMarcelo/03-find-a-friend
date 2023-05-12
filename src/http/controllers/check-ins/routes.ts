@@ -12,7 +12,7 @@ export async function checkInsRoutes(app: FastifyInstance) {
   app.get('/check-ins/history', history)
   app.get('/check-ins/metrics', metrics)
 
-  app.post('/gyms/:gymId/check-ins', create)
+  app.post('/pets/:petId/check-ins', create)
   app.patch(
     '/check-ins/:checkInId/validate',
     { onRequest: [verifyOrganizationRole('ADMIN')] },

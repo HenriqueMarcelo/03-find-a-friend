@@ -1,24 +1,24 @@
 import { expect, describe, it, beforeEach, vi, afterEach } from 'vitest'
 import { CheckInUseCase } from './check-in'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
-import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
+import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { Decimal } from '@prisma/client/runtime/library'
 import { MaxDistanceError } from './erros/max-distance-error'
 import { MaxNumberOfCheckInsError } from './erros/max-number-of-check-ins-error'
 
 let checkInsRepository: InMemoryCheckInsRepository
-let gymsRepository: InMemoryGymsRepository
+let petsRepository: InMemoryPetsRepository
 let sut: CheckInUseCase // SUT - system under test
 
 describe('CheckIn Use Case', () => {
   beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository()
-    gymsRepository = new InMemoryGymsRepository()
-    sut = new CheckInUseCase(checkInsRepository, gymsRepository) // SUT - system under test
+    petsRepository = new InMemoryPetsRepository()
+    sut = new CheckInUseCase(checkInsRepository, petsRepository) // SUT - system under test
 
-    await gymsRepository.create({
-      id: 'gym-id',
-      title: 'JavaScrpic Gym',
+    await petsRepository.create({
+      id: 'pet-id',
+      title: 'JavaScrpic Pet',
       description: '',
       latitude: -22.2498094,
       longitude: -42.4331477,
@@ -34,7 +34,7 @@ describe('CheckIn Use Case', () => {
 
   it('should be able to check in', async () => {
     const { checkIn } = await sut.execute({
-      gymId: 'gym-id',
+      petId: 'pet-id',
       userId: 'user-id',
       userLatitude: -22.2498094,
       userLongitude: -42.4331477,
@@ -54,7 +54,7 @@ describe('CheckIn Use Case', () => {
     vi.setSystemTime(new Date(2023, 0, 20, 8, 0, 0))
 
     await sut.execute({
-      gymId: 'gym-id',
+      petId: 'pet-id',
       userId: 'user-id',
       userLatitude: -22.2498094,
       userLongitude: -42.4331477,
@@ -64,7 +64,7 @@ describe('CheckIn Use Case', () => {
 
     await expect(() =>
       sut.execute({
-        gymId: 'gym-id',
+        petId: 'pet-id',
         userId: 'user-id',
         userLatitude: -22.2498094,
         userLongitude: -42.4331477,
@@ -76,7 +76,7 @@ describe('CheckIn Use Case', () => {
     vi.setSystemTime(new Date(2023, 0, 20, 8, 0, 0))
 
     await sut.execute({
-      gymId: 'gym-id',
+      petId: 'pet-id',
       userId: 'user-id',
       userLatitude: -22.2498094,
       userLongitude: -42.4331477,
@@ -85,7 +85,7 @@ describe('CheckIn Use Case', () => {
     vi.setSystemTime(new Date(2023, 0, 21, 9, 0, 0))
 
     const { checkIn } = await sut.execute({
-      gymId: 'gym-id',
+      petId: 'pet-id',
       userId: 'user-id',
       userLatitude: -22.2498094,
       userLongitude: -42.4331477,
@@ -94,10 +94,10 @@ describe('CheckIn Use Case', () => {
     expect(checkIn.id).toEqual(expect.any(String))
   })
 
-  it('should not be able to check in on distant gym', async () => {
-    gymsRepository.items.push({
-      id: 'gym-02',
-      title: 'Far Away Gym',
+  it('should not be able to check in on distant pet', async () => {
+    petsRepository.items.push({
+      id: 'pet-02',
+      title: 'Far Away Pet',
       description: '',
       latitude: new Decimal(-22.3009593),
       longitude: new Decimal(-42.540436),
@@ -106,7 +106,7 @@ describe('CheckIn Use Case', () => {
 
     await expect(() =>
       sut.execute({
-        gymId: 'gym-02',
+        petId: 'pet-02',
         userId: 'user-id',
         userLatitude: -22.2498094,
         userLongitude: -42.4331477,
