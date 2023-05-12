@@ -4,7 +4,7 @@ import { OrganizationsRepository } from '../users-repository'
 
 export class PrismaOrganizationsRepository implements OrganizationsRepository {
   async findByEmail(email: string) {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.organization.findUnique({
       where: {
         email,
       },
@@ -14,7 +14,7 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
   }
 
   async findById(id: string) {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.organization.findUnique({
       where: {
         id,
       },
@@ -24,7 +24,7 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
   }
 
   async create(data: Prisma.OrganizationCreateInput) {
-    const user = await prisma.user.create({
+    const user = await prisma.organization.create({
       data,
     })
     return user

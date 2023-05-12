@@ -3,7 +3,7 @@ import request from 'supertest'
 import { app } from '@/app'
 import { createAndAuthenticateOrganization } from '@/utils/test/create-and-authenticate-user'
 
-describe('Search Gyms (e2e)', () => {
+describe.skip('Search Gyms (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })

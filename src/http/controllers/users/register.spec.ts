@@ -16,8 +16,14 @@ describe('Register (e2e)', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
+      adress: 'Avenida Paulista',
+      cep: '25555-320	',
+      city: 'São Paulo',
+      uf: 'SP',
+      whatsapp: '22999887766',
     })
 
+    console.log(response.body)
     expect(response.statusCode).toEqual(201)
   })
 })

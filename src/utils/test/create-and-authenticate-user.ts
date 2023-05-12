@@ -7,7 +7,7 @@ export async function createAndAuthenticateOrganization(
   app: FastifyInstance,
   isAdmin = false,
 ) {
-  await prisma.user.create({
+  await prisma.organization.create({
     data: {
       name: 'John Doe',
       email: 'johndoe@example.com',
