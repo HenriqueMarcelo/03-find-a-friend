@@ -10,47 +10,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ADMIN
-  MEMBER
+enum UF {
+  AC
+  AL
+  AP
+  AM
+  BA
+  CE
+  DF
+  ES
+  GO
+  MA
+  MS
+  MT
+  MG
+  PA
+  PB
+  PR
+  PE
+  PI
+  RJ
+  RN
+  RS
+  RO
+  RR
+  SC
+  SP
+  SE
+  TO
 }
 
-model User {
+model Organization {
   id            String   @id @default(uuid())
   name          String
   email         String   @unique
   password_hash String
-  role          Role     @default(MEMBER)
+  cep           String?
+  adress        String?
+  whatsapp      String
+  city          String
+  uf            UF
   created_at    DateTime @default(now())
 
-  checkIns CheckIn[]
+  pets Pet[]
 
-  @@map("users")
+  @@map("organizations")
 }
 
-model CheckIn {
-  id           String    @id @default(uuid())
-  created_at   DateTime  @default(now())
-  validated_at DateTime?
-
-  user    User   @relation(fields: [user_id], references: [id])
-  user_id String
-
-  gym    Gym    @relation(fields: [gym_id], references: [id])
-  gym_id String
-
-  @@map("check_ins")
-}
-
-model Gym {
-  id          String  @id @default(uuid())
-  title       String
+model Pet {
+  id          String    @id @default(uuid())
+  name        String?
   description String?
-  phone       String?
-  latitude    Decimal
-  longitude   Decimal
+  energy      Int?
+  birth       DateTime?
+  size        Int?
 
-  checkIns CheckIn[]
+  organization    Organization @relation(fields: [organization_id], references: [id])
+  organization_id String
 
-  @@map("gyms")
+  @@map("pets")
 }
