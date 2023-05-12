@@ -11,7 +11,7 @@ interface SearchGymsResponse {
   page: number
 }
 
-export class SearchGymsUserCase {
+export class SearchGymsOrganizationCase {
   constructor(private gymsRepository: GymsRepository) {}
 
   async execute({

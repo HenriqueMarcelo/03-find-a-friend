@@ -52,7 +52,7 @@ export class CheckInUseCase {
       throw new MaxDistanceError()
     }
 
-    const checkInOnSameDay = await this.checkInsRepository.findByUserIdOnDate(
+    const checkInOnSameDay = await this.checkInsRepository.findByOrganizationIdOnDate(
       userId,
       new Date(),
     )

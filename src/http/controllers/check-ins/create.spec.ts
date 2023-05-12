@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import request from 'supertest'
 import { app } from '@/app'
-import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user'
+import { createAndAuthenticateOrganization } from '@/utils/test/create-and-authenticate-user'
 import { prisma } from '@/lib/prisma'
 
 describe('Create Check-In (e2e)', () => {
@@ -14,7 +14,7 @@ describe('Create Check-In (e2e)', () => {
   })
 
   it('should be able to create a check-in', async () => {
-    const { token } = await createAndAuthenticateUser(app)
+    const { token } = await createAndAuthenticateOrganization(app)
 
     const gym = await prisma.gym.create({
       data: {

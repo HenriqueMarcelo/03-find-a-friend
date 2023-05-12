@@ -1,21 +1,21 @@
-import { UsersRepository } from '@/repositories/users-repository'
-import { User } from '@prisma/client'
+import { OrganizationsRepository } from '@/repositories/users-repository'
+import { Organization } from '@prisma/client'
 import { ResourceNotFoundError } from './erros/resource-not-found-error'
 
-interface GetUserProfileUseCaseRequest {
+interface GetOrganizationProfileUseCaseRequest {
   userId: string
 }
 
-interface GetUserProfileUseCaseResponse {
-  user: User
+interface GetOrganizationProfileUseCaseResponse {
+  user: Organization
 }
 
-export class GetUserProfileUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+export class GetOrganizationProfileUseCase {
+  constructor(private usersRepository: OrganizationsRepository) {}
 
   async execute({
     userId,
-  }: GetUserProfileUseCaseRequest): Promise<GetUserProfileUseCaseResponse> {
+  }: GetOrganizationProfileUseCaseRequest): Promise<GetOrganizationProfileUseCaseResponse> {
     const user = await this.usersRepository.findById(userId)
 
     if (!user) {

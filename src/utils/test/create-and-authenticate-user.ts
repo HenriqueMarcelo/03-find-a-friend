@@ -3,7 +3,7 @@ import { hash } from 'bcryptjs'
 import { FastifyInstance } from 'fastify'
 import request from 'supertest'
 
-export async function createAndAuthenticateUser(
+export async function createAndAuthenticateOrganization(
   app: FastifyInstance,
   isAdmin = false,
 ) {

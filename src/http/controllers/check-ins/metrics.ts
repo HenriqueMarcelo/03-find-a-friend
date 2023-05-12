@@ -1,10 +1,10 @@
-import { makeGetUserMetricsUseCase } from '@/use-cases/factories/make-get-user-metrics-use-case'
+import { makeGetOrganizationMetricsUseCase } from '@/use-cases/factories/make-get-user-metrics-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function metrics(request: FastifyRequest, reply: FastifyReply) {
-  const getUserMetricsUseCase = makeGetUserMetricsUseCase()
+  const getOrganizationMetricsUseCase = makeGetOrganizationMetricsUseCase()
 
-  const { checkInsCount } = await getUserMetricsUseCase.execute({
+  const { checkInsCount } = await getOrganizationMetricsUseCase.execute({
     userId: request.user.sub,
   })
 

@@ -1,15 +1,15 @@
 import { expect, describe, it, beforeEach } from 'vitest'
 import { RegisterUseCase } from './register'
 import { compare } from 'bcryptjs'
-import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { UserAlreadyExistsError } from './erros/user-already-exists-error'
+import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memory-users-repository'
+import { OrganizationAlreadyExistsError } from './erros/user-already-exists-error'
 
-let usersRepository: InMemoryUserRepository
+let usersRepository: InMemoryOrganizationRepository
 let sut: RegisterUseCase
 
 describe('Register Use Case', () => {
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository()
+    usersRepository = new InMemoryOrganizationRepository()
     sut = new RegisterUseCase(usersRepository)
   })
 
@@ -43,7 +43,7 @@ describe('Register Use Case', () => {
         email,
         password: '123456',
       }),
-    ).rejects.toBeInstanceOf(UserAlreadyExistsError)
+    ).rejects.toBeInstanceOf(OrganizationAlreadyExistsError)
   })
 
   it('should be able to register', async () => {
